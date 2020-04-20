@@ -103,3 +103,61 @@ diff -burN SDL_mixer-1.2.11.orig//music_mod.c SDL_mixer-1.2.11/music_mod.c
  	return 0;
  }
  
+--- SDL_mixer-1.2.11.orig//Makefile
++++ SDL_mixer-1.2.11.orig//Makefile
+@@ -0,0 +1,55 @@
++CC = $(PS3DEV)/ppu/bin/powerpc64-ps3-elf-gcc
++AR = $(PS3DEV)/ppu/bin/powerpc64-ps3-elf-ar
++RANLIB = $(PS3DEV)/ppu/bin/powerpc64-ps3-elf-ranlib
++STRIP = $(PS3DEV)/ppu/bin/powerpc64-ps3-elf-strip
++
++INCLUDE = -I include
++CFLAGS = -Wall -Wextra -O2 -flto -Wno-unused-parameter
++CFLAGS += -mcpu=cell  -I$(PS3DEV)/ppu/include -I$(PS3DEV)/portlibs/ppu/include/SDL -I$(PS3DEV)/portlibs/ppu/include
++CFLAGS += -maltivec -DHAVE_STDINT_H -D_STDINT_H_ -D__PSL1GHT__ -DOGG_MUSIC -DMOD_MUSIC -DHAVE_POW -DHAVE_MMAP=0 -DDEBUG_ERROR
++
++TARGET = libSDL_mixer.a
++CONFIG_H = include/SDL_config.h
++SOURCES = \
++	dynamic_flac.c \
++	dynamic_mod.c \
++	dynamic_mp3.c \
++	dynamic_ogg.c \
++	effect_position.c \
++	effect_stereoreverse.c \
++	effects_internal.c \
++	load_aiff.c \
++	load_flac.c \
++	load_ogg.c \
++	load_voc.c \
++	mixer.c \
++	music.c \
++	music_cmd.c \
++	music_flac.c \
++	music_mad.c \
++	music_mod.c \
++	music_ogg.c \
++	wavestream.c
++
++OBJECTS = $(SOURCES:.c=.o)
++
++
++all: $(TARGET)
++
++$(TARGET): $(OBJECTS)
++	$(AR) cr $@ $^
++	$(RANLIB) $@
++	$(STRIP) --strip-unneeded $@
++
++.c.o:
++	$(CC) $(INCLUDE) $(CFLAGS) -c $< -o $@
++	
++install:
++	cp $(TARGET) $(PS3DEV)/portlibs/ppu/lib/$(TARGET)
++	cp -r include /tmp
++	mv /tmp/include /tmp/SDL
++	cp -r /tmp/SDL $(PS3DEV)/portlibs/ppu/include
++	rm -r /tmp/SDL
++	
++clean:
++	rm -f $(OBJECTS) $(TARGET)
