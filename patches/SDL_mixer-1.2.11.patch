@@ -154,10 +154,8 @@ diff -burN SDL_mixer-1.2.11.orig//music_mod.c SDL_mixer-1.2.11/music_mod.c
 +	
 +install:
 +	cp $(TARGET) $(PS3DEV)/portlibs/ppu/lib/$(TARGET)
-+	cp -r include /tmp
-+	mv /tmp/include /tmp/SDL
-+	cp -r /tmp/SDL $(PS3DEV)/portlibs/ppu/include
-+	rm -r /tmp/SDL
++	cp SDL_mixer.h $(PS3DEV)/portlibs/ppu/include
++	cp SDL_mixer.h $(PS3DEV)/portlibs/ppu/include/SDL
 +	
 +clean:
 +	rm -f $(OBJECTS) $(TARGET)
