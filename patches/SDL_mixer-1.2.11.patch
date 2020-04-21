@@ -105,7 +105,7 @@ diff -burN SDL_mixer-1.2.11.orig//music_mod.c SDL_mixer-1.2.11/music_mod.c
  
 --- SDL_mixer-1.2.11.orig//Makefile
 +++ SDL_mixer-1.2.11.orig//Makefile
-@@ -0,0 +1,55 @@
+@@ -0,0 +1,53 @@
 +CC = $(PS3DEV)/ppu/bin/powerpc64-ps3-elf-gcc
 +AR = $(PS3DEV)/ppu/bin/powerpc64-ps3-elf-ar
 +RANLIB = $(PS3DEV)/ppu/bin/powerpc64-ps3-elf-ranlib
